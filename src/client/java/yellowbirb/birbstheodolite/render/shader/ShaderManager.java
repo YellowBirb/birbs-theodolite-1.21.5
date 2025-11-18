@@ -46,7 +46,6 @@ public class ShaderManager {
             Optional<Resource> resource = resourceFactory.getResource(Identifier.of(BirbsTheodoliteClient.MOD_ID, "shader/" + name + type.fileExtension));
             int i = glCreateShader(type.glType);
             if (resource.isPresent()) {
-                System.out.println("present");
                 GlStateManager.glShaderSource(i, concat(new GlImportProcessor() {
                     @SneakyThrows
                     @Nullable

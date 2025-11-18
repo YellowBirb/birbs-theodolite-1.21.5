@@ -16,7 +16,6 @@ public class Shader {
         int v = ShaderManager.loadShaderProgram(name, ShaderManager.ShaderType.VERTEX);
         int f = ShaderManager.loadShaderProgram(name, ShaderManager.ShaderType.FRAGMENT);
         this.id = glCreateProgram();
-        System.out.println("Shader ID: " + this.id);
         glAttachShader(id, v);
         glAttachShader(id, f);
         glLinkProgram(id);

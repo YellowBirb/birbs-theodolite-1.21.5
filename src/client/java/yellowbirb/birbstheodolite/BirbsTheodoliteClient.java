@@ -26,14 +26,16 @@ public class BirbsTheodoliteClient implements ClientModInitializer {
     public void onInitializeClient() {
         instance = this;
 
-        System.out.println("a b");
-
         RenderSystem.init();
 
-        WorldRenderEvents.BEFORE_DEBUG_RENDER.register(ctx -> {
+        WorldRenderEvents.LAST.register(ctx -> {
             WorldBuffer buffer = RenderUtil.startLines(ctx);
-            RenderUtil.drawLine(buffer, 0, 50, 0, 0, -50, 0, new Color(255, 0, 0, 255));
+            RenderUtil.drawLine(buffer, 0, 50f, 0, 0, -50f, 0, new Color(255, 0, 0, 255));
             RenderUtil.endLines(buffer);
+
+            /*WorldBuffer buffer2 = RenderUtil.startTri(ctx);
+            RenderUtil.drawTri(buffer2, 0, 0, 0, 0, 1, 0, 0, 1, 1, new Color(255, 255, 0, 100));
+            RenderUtil.endTri(buffer2);*/
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {

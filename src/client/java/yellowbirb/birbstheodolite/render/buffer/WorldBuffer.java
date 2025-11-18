@@ -38,12 +38,13 @@ public class WorldBuffer {
         BufferManager.writeBuffer(getBuffer());
         applyProjectionMatrix();
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+        // Vertex Coordinates
         glEnableVertexAttribArray(0);
-        glVertexAttribPointer(1, 4, GL_FLOAT, false, 0, vertices.size() * 3 * 4L);
-        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-        BufferManager.unbindBuffer();
+        // Vertex RGBA
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 4, GL_FLOAT, false, 0, vertices.size() * 3 * 4L);
 
         shader.bind();
         BufferManager.draw(drawMode, this.vertices.size());
@@ -52,6 +53,7 @@ public class WorldBuffer {
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);
 
+        BufferManager.unbindBuffer();
         BufferManager.unbindArray();
     }
 

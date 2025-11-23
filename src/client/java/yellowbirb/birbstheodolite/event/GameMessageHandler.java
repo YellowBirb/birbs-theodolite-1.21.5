@@ -14,8 +14,9 @@ public class GameMessageHandler {
 
     private final String THEODOLITE_MESSAGE = "The target is around [0-9]+ blocks (below|above), at a [1-9][0-9]? degrees angle!";
     private final String PELT_REWARD_MESSAGE = "Killing the animal rewarded you [1-9][0-9]? pelts.";
+    private final String SERVER_CHANGE_MESSAGE = "Sending to server .+\\.\\.\\.";
 
-    private final String[] RELEVANT_MESSAGES = {THEODOLITE_MESSAGE, PELT_REWARD_MESSAGE};
+    private final String[] RELEVANT_MESSAGES = {THEODOLITE_MESSAGE, PELT_REWARD_MESSAGE, SERVER_CHANGE_MESSAGE};
 
 
     private int isRelevant(String msg) {
@@ -53,6 +54,9 @@ public class GameMessageHandler {
                 break;
             case 1:
                 onReceivePeltRewardMessage();
+                break;
+            case 2:
+                onReceiveServerChangeMessage();
                 break;
         }
     }
@@ -93,6 +97,10 @@ public class GameMessageHandler {
     }
 
     private void onReceivePeltRewardMessage() {
+        RenderManager.clear();
+    }
+
+    private void onReceiveServerChangeMessage() {
         RenderManager.clear();
     }
 

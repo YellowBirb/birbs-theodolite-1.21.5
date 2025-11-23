@@ -8,8 +8,10 @@ import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.text.Text;
-import yellowbirb.birbstheodolite.render.RenderUtils;
+import yellowbirb.birbstheodolite.render.CustomRenderPipelines;
+import yellowbirb.birbstheodolite.render.Renderer;
 
 public class BirbsTheodoliteClient implements ClientModInitializer {
 
@@ -23,7 +25,12 @@ public class BirbsTheodoliteClient implements ClientModInitializer {
         instance = this;
 
         WorldRenderEvents.LAST.register(ctx -> {
-            RenderUtils.renderSingleLine(ctx, 0, -50, 0, 0, 50, 0);
+            Renderer.drawSingleLine(ctx, CustomRenderPipelines.LINES,
+                    0, 0, 0, 255, 0, 0, 255,
+                    0, 1, 0, 255, 0, 0, 255);
+
+            Renderer.drawCircleXZ(ctx, RenderPipelines.LINE_STRIP,
+                    3f, 0.25f, 0, 3, 0, 255, 255, 0, 255);
         });
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {

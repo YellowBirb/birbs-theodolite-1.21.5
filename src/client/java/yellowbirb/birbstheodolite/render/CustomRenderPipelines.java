@@ -6,7 +6,6 @@ import com.mojang.blaze3d.platform.DepthTestFunction;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gl.UniformType;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.util.Identifier;
 import yellowbirb.birbstheodolite.BirbsTheodoliteClient;
@@ -14,11 +13,9 @@ import yellowbirb.birbstheodolite.BirbsTheodoliteClient;
 @UtilityClass
 public class CustomRenderPipelines {
 
-    private static final RenderPipeline.Snippet RENDERTYPE_LINES_SNIPPET_NO_FOG = RenderPipeline.builder(new RenderPipeline.Snippet[]{RenderPipelines.MATRICES_COLOR_SNIPPET})
+    private static final RenderPipeline.Snippet RENDERTYPE_LINES_SNIPPET_NO_FOG = RenderPipeline.builder(new RenderPipeline.Snippet[]{RenderPipelines.TRANSFORMS_AND_PROJECTION_SNIPPET, RenderPipelines.GLOBALS_SNIPPET})
             .withVertexShader("core/rendertype_lines")
             .withFragmentShader("core/rendertype_lines")
-            .withUniform("LineWidth", UniformType.FLOAT)
-            .withUniform("ScreenSize", UniformType.VEC2)
             .withBlend(BlendFunction.TRANSLUCENT)
             .withCull(false)
             .withVertexFormat(VertexFormats.POSITION_COLOR_NORMAL, VertexFormat.DrawMode.LINES)

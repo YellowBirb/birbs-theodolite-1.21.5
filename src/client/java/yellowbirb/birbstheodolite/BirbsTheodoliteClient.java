@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import yellowbirb.birbstheodolite.event.GameMessageHandler;
 import yellowbirb.birbstheodolite.render.RenderManager;
+import yellowbirb.birbstheodolite.render.shapes.Cube;
 
 public class BirbsTheodoliteClient implements ClientModInitializer {
 
@@ -13,6 +14,8 @@ public class BirbsTheodoliteClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+
+        RenderManager.add(new Cube(1, 0, 1, 0, 255, 255, 0, 255, false));
 
         WorldRenderEvents.LAST.register(RenderManager::draw);
 

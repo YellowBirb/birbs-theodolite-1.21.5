@@ -1,6 +1,7 @@
 package yellowbirb.birbstheodolite.render;
 
 import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderPipeline;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -8,12 +9,15 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import lombok.experimental.UtilityClass;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gl.ScissorState;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.BuiltBuffer;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.util.BufferAllocator;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Vector4f;
+import yellowbirb.birbstheodolite.BirbsTheodoliteClient;
 import yellowbirb.birbstheodolite.render.shapes.RenderShape;
 
 import java.util.OptionalDouble;
@@ -59,17 +63,24 @@ public class Renderer {
             indexType = buffer.getDrawParameters().indexType();
         }
 
+        float lineWidth = 1f;
+
+        GpuBufferSlice dynamicTransforms = RenderSystem.getDynamicUniforms()
+                .write(RenderSystem.getModelViewMatrix(), new Vector4f(1f, 1f, 1f, 1f), RenderSystem.getModelOffset(), RenderSystem.getTextureMatrix(), lineWidth);
+
         try (RenderPass renderPass = RenderSystem.getDevice()
                 .createCommandEncoder()
-                .createRenderPass(MinecraftClient.getInstance().getFramebuffer().getColorAttachment(), OptionalInt.empty(), MinecraftClient.getInstance().getFramebuffer().getDepthAttachment(), OptionalDouble.empty())) {
+                .createRenderPass(() -> BirbsTheodoliteClient.MOD_ID + "rendering", MinecraftClient.getInstance().getFramebuffer().getColorAttachmentView(), OptionalInt.empty(), MinecraftClient.getInstance().getFramebuffer().getDepthAttachmentView(), OptionalDouble.empty())) {
 
             renderPass.setPipeline(pipeline);
 
-            renderPass.setUniform("Projection", RenderSystem.getProjectionMatrix());
-
-            if (RenderSystem.SCISSOR_STATE.isEnabled()) {
-                renderPass.enableScissor(RenderSystem.SCISSOR_STATE);
+            ScissorState scissorState = RenderSystem.getScissorStateForRenderTypeDraws();
+            if (scissorState.method_72091()) {
+                renderPass.enableScissor(scissorState.method_72092(), scissorState.method_72093(), scissorState.method_72094(), scissorState.method_72095());
             }
+
+            RenderSystem.bindDefaultUniforms(renderPass);
+            renderPass.setUniform("DynamicTransforms", dynamicTransforms);
 
 
             renderPass.setVertexBuffer(0, vertices);
@@ -77,7 +88,7 @@ public class Renderer {
             renderPass.setIndexBuffer(indices, indexType);
 
 
-            renderPass.drawIndexed(0, buffer.getDrawParameters().indexCount());
+            renderPass.drawIndexed(0, 0, buffer.getDrawParameters().indexCount(), 1);
         }
 
         buffer.close();

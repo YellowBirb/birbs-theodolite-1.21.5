@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "birbs-theodolite",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"name": "Birb's Theodolite",
 	"description": "Theodolite \"Solver\"",
 	"authors": [

@@ -81,18 +81,16 @@ public class GameMessageHandler {
 
         // in degrees
         double angleMargin = 1;
-        // alpharad mentioned :O
-        double alpha_rad = Math.toRadians(alpha);
         double margin_rad = Math.toRadians(angleMargin);
 
         float heightMargin = 1;
-        float radius1_1 = (float) (Math.abs(Math.tan(alpha_rad + margin_rad) * (deltaY + heightMargin)));
-        float radius1_2 = (float) (Math.abs(Math.tan(alpha_rad + margin_rad) * (deltaY - heightMargin)));
+        float radius1_1 = (float) (Math.abs(Math.tan(alpha + margin_rad) * (deltaY + heightMargin)));
+        float radius1_2 = (float) (Math.abs(Math.tan(alpha + margin_rad) * (deltaY - heightMargin)));
 
-        float radius2 = (float) (Math.abs(Math.tan(alpha_rad) * deltaY));
+        float radius2 = (float) (Math.abs(Math.tan(alpha) * deltaY));
 
-        float radius3_1 = (float) (Math.abs(Math.tan(alpha_rad - margin_rad) * (deltaY + heightMargin)));
-        float radius3_2 = (float) (Math.abs(Math.tan(alpha_rad - margin_rad) * (deltaY - heightMargin)));
+        float radius3_1 = (float) (Math.abs(Math.tan(alpha - margin_rad) * (deltaY + heightMargin)));
+        float radius3_2 = (float) (Math.abs(Math.tan(alpha - margin_rad) * (deltaY - heightMargin)));
 
         float playerX = (float) player.getX();
         float playerY = (float) player.getY();

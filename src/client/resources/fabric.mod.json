@@ -5,11 +5,15 @@
 	"name": "Birb's Theodolite",
 	"description": "Theodolite \"Solver\"",
 	"authors": [
-		"YellowBirb"
+		{"name": "YellowBirb", "contact": {
+			"discord": "yellowbirb"
+		}}
+	],
+	"contributors": [
+		"SoberCounsel - Nr.1 Fan"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/YellowBirb/birbs-theodolite"
 	},
 	"license": "CC-BY-NC-SA-4.0",
 	"icon": "assets/birbs-theodolite/icon.png",
